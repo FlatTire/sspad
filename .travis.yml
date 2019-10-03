@@ -4,26 +4,19 @@ python:
   - 3.7
 
 install:
-  - pip install boto3
-  - pip install botocore
-  - pip install docopt
-  - pip install flake8
-  - pip install mock
-  - pip install nose2
-  - pip install pipenv
-  - pip install pyaml
+  - pipenv install --deploy -d
 
 script:
   # Show the versions of all libraries
-  - pip freeze
+  - pipenv run pip freeze
 
   # lint the source
-  - flake8 sspad/
+  - pipenv run flake8 sspad/
 
   # lint the tests
-  - flake8 tests/
+  - pipenv run flake8 tests/
 
   # run the tests
-  - nose2 -vv
+  - pipenv run nose2 -vv
 
 # vim: ft=yaml sw=2 ts=2

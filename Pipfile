@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+"boto3" = "*"
+"botocore" = "*"
+"docopt" = "*"
+"pyaml" = "*"
+
+[dev-packages]
+"flake8" = "*"
+"mock" = "*"
+"nose2" = "*"
+"pipenv" = "*"
