@@ -157,24 +157,24 @@ class StackSet(unittest.TestCase):
         global_suffix = '.test-global'
 
         # Override os.path.exists to indicate whether or not this is global
-        patch_exists.side_effect = [
-            patch_is_global,  # Checking for the global file
-            False,  # Checking for the presence of a blacklist
-        ]
+        patch_exists.return_value = patch_is_global
 
         # Setup the StackSet class
         cfn.StackSet.blacklist_suffix = blacklist_suffix
         cfn.StackSet.global_suffix = global_suffix
 
-        # Attempt instantiating the StackSet
-        stackset = cfn.StackSet.FromPath(
-            os.path.join(path, stack_name + suffix))
+        with mock.patch('sspad.cfn.open',
+                        mock.mock_open(read_data=BLACKLIST_SAMPLE),
+                        create=True):
+            # Attempt instantiating the StackSet
+            stackset = cfn.StackSet.FromPath(
+                os.path.join(path, stack_name + suffix))
 
-        # Check the is_global attribute
-        self.assertEqual(
-            stackset.is_global,
-            patch_is_global,
-            'is_global check is broken')
+            # Check the is_global attribute
+            self.assertEqual(
+                stackset.is_global,
+                patch_is_global,
+                'is_global check is broken')
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
