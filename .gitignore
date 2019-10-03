@@ -102,3 +102,4 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+/nose2-junit.xml
